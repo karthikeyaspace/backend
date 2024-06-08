@@ -16,10 +16,7 @@ mongoClient.connect(process.env.MONGODB_URI)
     });
 
 
-app.use(cors({
-    origin: 'https://shortifyy.vercel.app/',
-    methods: ['GET', 'POST']
-}))
+app.use(cors())
 app.use(express.json())
 
 const shorten = require('./shorten/shorten.js')
