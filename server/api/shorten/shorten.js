@@ -1,14 +1,14 @@
 const express = require('express');
 const shorten = express.Router();
 const randomString = require('./randomString.js')
+const asyncHandler = require('express-async-handler')
 
 
-shorten.post('/', async (req, res) => {
+shorten.post('/', asyncHandler(async (req, res) => {
     const urls = req.app.get('urls')
     let longUrl = req.body.longUrl
 
-    // console.log(longUrl)
-    // verify long url
+    console.log("Long Url: ", longUrl)
 
     const urlParts = longUrl.split('.');
     if (urlParts.length < 2) {
@@ -33,26 +33,29 @@ shorten.post('/', async (req, res) => {
 
     }
     catch (err) {
-        return res.json({ message: "error" })
+        return res.json({ message: "error", error: err })
     }
 
-})
+}))
 
 
-shorten.get('/:alias', async (req, res) => {
+shorten.get('/:alias', asyncHandler(async (req, res) => {
     const urls = req.app.get('urls');
     const alias = req.params.alias;
 
-    const longUrlFromDb = await urls.findOne({ alias: alias });
-
-    // console.log(longUrlFromDb)
-    if (longUrlFromDb) {
-        res.send({ message: "redirecting", payload: { longUrl: longUrlFromDb.longUrl } });
+    try {
+        const longUrlFromDb = await urls.findOne({ alias: alias });
+        if (longUrlFromDb) {
+            res.send({ message: "redirecting", payload: { longUrl: longUrlFromDb.longUrl } });
+        }
+        else {
+            res.send({ message: "url not found" });
+        }
     }
-    else {
-        res.send({ message: "url not found" });
+    catch (err) {
+        return res.json({ message: "error", error: err });
     }
 
-});
+}));
 
 module.exports = shorten;
