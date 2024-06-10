@@ -24,7 +24,7 @@ shorten.post('/', asyncHandler(async (req, res) => {
     const data = {
         longUrl: longUrl,
         alias: alias,
-        shortUrl: process.env.LongUrl + alias,
+        shortUrl: process.env.LONG_URL + alias,
         createdAt: new Date()
     }
 
@@ -38,8 +38,8 @@ shorten.post('/', asyncHandler(async (req, res) => {
 
         // //create short url
         // const alias = randomString(5).shortUrl
-        // await urls.insertOne({ longUrl: longUrl, alias: alias, shortUrl: process.env.LongUrl + alias, createdAt: new Date() })
-        // return res.json({ message: "short url created", payload: { shortUrl: process.env.LongUrl + alias } })
+        // await urls.insertOne({ longUrl: longUrl, alias: alias, shortUrl: process.env.LONG_URL + alias, createdAt: new Date() })
+        // return res.json({ message: "short url created", payload: { shortUrl: process.env.LONG_URL + alias } })
 
 
         //firebase

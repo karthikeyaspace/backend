@@ -1,6 +1,4 @@
 //creates 5 letter random strign [0-9] [a-z]
-require('dotenv').config();
-
 const randomString = (n) => {
     let result = '';
     const characters = 'abcdefghijklmnopqrstuvwxyz';
