@@ -22,7 +22,10 @@ const { initializeFirebase } = require('./libs/firebase.js')
 
 
 
-app.use(cors())
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    optionsSuccessStatus: 200
+}))
 app.use(express.json())
 initializeFirebase()
 
