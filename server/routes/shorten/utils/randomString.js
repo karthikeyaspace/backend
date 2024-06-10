@@ -1,13 +1,13 @@
 //creates 5 letter random strign [0-9] [a-z]
 require('dotenv').config();
 
-const randomString = () => {
+const randomString = (n) => {
     let result = '';
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < 5; i++) 
+    const characters = 'abcdefghijklmnopqrstuvwxyz';
+    for (let i = 0; i < n; i++) 
         result += characters.charAt(Math.floor(Math.random() * characters.length));
 
-    return {shortUrl: result};
+    return result;
 }
 
 module.exports = randomString;
