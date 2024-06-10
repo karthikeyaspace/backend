@@ -25,9 +25,10 @@ const { initializeFirebase } = require('./libs/firebase.js')
 app.use(cors())
 
 app.use(express.json())
+
 initializeFirebase()
 
-const shorten = require('../routes/shorten/shorten.js')
+const shorten = require('./routes/shorten/shorten.js')
 app.use('/shorten', shorten)
 
 app.use((err, req, res, next) => {

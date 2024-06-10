@@ -1,4 +1,4 @@
-function errorHandler(error, name, from){
+function errorHandler(error, from){
     let loggerFunction = console.log
 
     loggerFunction("--------START-------");
@@ -29,7 +29,7 @@ function errorHandler(error, name, from){
         loggerFunction("Error Message: ", error.message);
     }
 
-    loggerFunction("---------END-------");
+    loggerFunction("---------END-------", from);
 }
 
 module.exports = {

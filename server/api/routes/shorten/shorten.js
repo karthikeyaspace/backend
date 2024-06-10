@@ -2,8 +2,8 @@ const express = require('express');
 const shorten = express.Router();
 const randomString = require('./utils/randomString.js')
 const asyncHandler = require('express-async-handler')
-const { uploadData, getUrlFromLongUrl, getUrlFromAlias } = require('../../api/libs/firebase.js')
-const { errorHandler } = require('../../api/helpers/helper.js')
+const { uploadData, getUrlFromLongUrl, getUrlFromAlias } = require('../../libs/firebase.js')
+const { errorHandler } = require('../../helpers/helper.js')
 
 
 shorten.post('/', asyncHandler(async (req, res) => {
