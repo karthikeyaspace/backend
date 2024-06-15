@@ -1,9 +1,8 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-require('dotenv').config()
-const { initializeFirebase } = require('./libs/firebase.js')
-
+const express = require("express");
+const app = express();
+const cors = require("cors");
+require("dotenv").config();
+const { initializeFirebase } = require("./libs/firebase.js");
 
 // const mongoClient = require('mongodb').MongoClient;
 // mongoClient.connect(process.env.MONGODB_URI)
@@ -20,23 +19,45 @@ const { initializeFirebase } = require('./libs/firebase.js')
 // mongo db randomly disconnects out of no where, so using firebase/firestore instead
 // not issue of mongo db, issue of vercel
 
+const allowedOrigins = [
+  "https://kv3.vercel.app",
+  "https://shortifyy.vercel.app",
+];
 
 
-app.use(cors())
+const corsOptions = (req, callback) => {
+  let corsOptions;
+  if (allowedOrigins.indexOf(req.header("Origin")) !== -1) {
+    corsOptions = { origin: true };
+  } else {
+    corsOptions = { origin: false }; 
+  }
+  callback(null, corsOptions);
+};
 
-app.use(express.json())
+app.use(cors(corsOptions));
 
-initializeFirebase()
+app.use(express.json());
 
-const shorten = require('./routes/shorten/shorten.js')
-app.use('/shorten', shorten)
+initializeFirebase();
+
+const shorten = require("./routes/shorten/shorten.js");
+const kv3 = require("./routes/kv3/kv3.js");
+app.use("/shorten", shorten);
+app.use("/kv3", kv3);
+
+app.get("/", (req, res) => {
+  res.send(
+    'Hello World - <a href="http://kv3.vercel.app" target="_blank">see me</a>'
+  );
+});
 
 app.use((err, req, res, next) => {
-    res.send({
-        error: err.message
-    })
-})
+  res.send({
+    error: err.message,
+  });
+});
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 3000}`)
-})
+  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+});

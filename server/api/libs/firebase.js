@@ -31,8 +31,8 @@ const initializeFirebase = () => {
 
 const uploadData = async (collectionName, data) => {
     try {
-        const document = doc(firestoreDb, collectionName, data.alias); //firestore, collection, unique id
-        let response = await setDoc(document, data);
+        const document = doc(firestoreDb, collectionName, data.alias || data.id); //firestore, collection, unique id
+        await setDoc(document, data);
     } catch (error) {
         errorHandler(error, 'firebase-uploadData');
     }
