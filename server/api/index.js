@@ -22,17 +22,24 @@ const { initializeFirebase } = require("./libs/firebase.js");
 const allowedOrigins = [
   "https://kv3.vercel.app",
   "https://shortifyy.vercel.app",
+  "http://localhost:5173" 
 ];
 
-
-const corsOptions = (req, callback) => {
-  let corsOptions;
-  if (allowedOrigins.indexOf(req.header("Origin")) !== -1) {
-    corsOptions = { origin: true };
-  } else {
-    corsOptions = { origin: false }; 
-  }
-  callback(null, corsOptions);
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) {
+      return callback(null, true);
+    }
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: "Content-Type,Authorization"
 };
 
 app.use(cors(corsOptions));
