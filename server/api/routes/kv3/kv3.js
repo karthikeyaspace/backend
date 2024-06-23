@@ -44,7 +44,7 @@ kvApp.post('/mailme', asyncHandler(async (req, res) => {
 
         if (toUser.success && toMe.success) {
             await uploadData(process.env.FIREBASE_MAILME_COLL_NAME, mail);
-            return res.send({ message: "Mail received", payload: { toUser: toUser.info, toMe: toMe.info } });
+            return res.send({ message: "Mail received" });
         }
 
         return res.send({ message: "Mail not received", payload: { toUserErr: toUser.error, toMeErr: toMe.error } });
