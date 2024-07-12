@@ -44,14 +44,11 @@ shorten.post('/', asyncHandler(async (req, res) => {
 
         //firebase
         const longUrlFromDb = await getUrlFromLongUrl(process.env.FIREBASE_COLLECTION_NAME, data.longUrl)
-        if (longUrlFromDb.length > 0) {
+        if (longUrlFromDb.length > 0) 
             return res.send({ message: "url already exists", payload: { shortUrl: longUrlFromDb[0].shortUrl } })
-        }
-        else {
-            await uploadData(process.env.FIREBASE_COLLECTION_NAME, data)
-            return res.send({ message: "short url created", payload: { shortUrl: data.shortUrl } })
-        }
-        console.log("fire data", data)
+        
+        await uploadData(process.env.FIREBASE_COLLECTION_NAME, data)
+        return res.send({ message: "short url created", payload: { shortUrl: data.shortUrl } })
     }
     catch (err) {
         errorHandler(err, 'shorten-post')
@@ -92,4 +89,4 @@ shorten.get('/:alias', asyncHandler(async (req, res) => {
 
 }));
 
-module.exports = shorten;
+// module.exports = shorten;

@@ -48,9 +48,9 @@ app.use(express.json());
 
 initializeFirebase();
 
-const shorten = require("./routes/shorten/shorten.js");
+const shortenSupabase = require("./routes/shorten/shortenSupabase.js");
 const kv3 = require("./routes/kv3/kv3.js");
-app.use("/shorten", shorten);
+app.use("/shorten", shortenSupabase);
 app.use("/kv3", kv3);
 
 app.get("/", (req, res) => {
