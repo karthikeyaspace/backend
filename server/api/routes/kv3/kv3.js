@@ -2,7 +2,6 @@ const express = require('express')
 const kvApp = express.Router()
 const randomString = require('../shorten/utils/randomString.js')
 const asyncHandler = require('express-async-handler')
-const { uploadData } = require('../../libs/firebase.js')
 const { errorHandler } = require('../../helpers/helper.js')
 const { sendMail } = require('../../helpers/sendMail.js')
 
@@ -37,16 +36,11 @@ kvApp.post('/mailme', asyncHandler(async (req, res) => {
         html: `<h1>Hello Karthikeya</h1><p>A new mail has been received from:</p><ul><li><strong>Name:</strong> ${name}</li><li><strong>Email:</strong> ${email}</li></ul><br><p>The message is:</p><blockquote>"${message}"</blockquote>`
     };
     
-
     try {
         const toUser = await sendMail(mailOptionsToUser);
         const toMe = await sendMail(mailOptionsToMe);
-
-        if (toUser.success && toMe.success) {
-            await uploadData(process.env.FIREBASE_MAILME_COLL_NAME, mail);
+        if (toUser.success && toMe.success) 
             return res.send({ message: "Mail received" });
-        }
-
         return res.send({ message: "Mail not received", payload: { toUserErr: toUser.error, toMeErr: toMe.error } });
     } catch (err) {
         errorHandler(err, 'kvApp-post');
