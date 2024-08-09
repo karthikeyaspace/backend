@@ -40,7 +40,7 @@ kvApp.post('/mailme', asyncHandler(async (req, res) => {
         const toUser = await sendMail(mailOptionsToUser);
         const toMe = await sendMail(mailOptionsToMe);
         if (toUser.success && toMe.success) 
-            return res.send({ message: "Mail received" });
+            return res.send({ message: "Mail received"});
         return res.send({ message: "Mail not received", payload: { toUserErr: toUser.error, toMeErr: toMe.error } });
     } catch (err) {
         errorHandler(err, 'kvApp-post');
