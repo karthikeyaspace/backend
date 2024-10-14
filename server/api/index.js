@@ -22,7 +22,6 @@ const { initializeFirebase } = require("./libs/firebase.js");
 const allowedOrigins = [
   "https://kv3.vercel.app",
   "https://shortifyy.vercel.app",
-  "http://localhost:5173",
   "https://www.itskv.me"
 ];
 
