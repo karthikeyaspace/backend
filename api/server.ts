@@ -1,6 +1,9 @@
 import express, { Response } from "express";
 import cors from "cors";
 import env from "./config/env";
+import { kv } from "./routes/kv.route";
+import { shortifyy } from "./routes/shortifyy.route";
+import expressAsyncHandler from "express-async-handler";
 
 const app = express();
 
@@ -8,10 +11,8 @@ app.use(cors());
 
 app.use(express.json());
 
-const shortenSupabase = require("./routes/shorten/shortenSupabase.js");
-const kv3 = require("./routes/kv3/kv3.js");
-app.use("/shorten", shortenSupabase);
-app.use("/kv3", kv3);
+app.use("/kv", kv);
+app.use("/shortifyy", shortifyy);
 
 app.get("/", (_, res: Response) => {
   res.send(
@@ -20,5 +21,5 @@ app.get("/", (_, res: Response) => {
 });
 
 app.listen(env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT || 3000}`);
+  console.log(`Server is running on port ${env.PORT}`);
 });

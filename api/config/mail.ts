@@ -18,7 +18,7 @@ const sendMail = async (mailOptions: MailOptionTypes) => {
   });
 
   try {
-    const mail = await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     return { success: true, message: "Mail sent sucessfully" };
   } catch (error) {
     console.error("Error sending email: ", error);

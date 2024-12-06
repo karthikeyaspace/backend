@@ -1,13 +1,17 @@
-const express = require("express");
-const shorten = express.Router();
-const asyncHandler = require("express-async-handler");
-const supabase = require("../../libs/supabase.js");
-const { errorHandler } = require("../../helpers/helper.js");
-const randomString = require("./utils/randomString.js");
+import express from "express";
 
-shorten.post(
+import supabase from "../config/db";
+import { errorHandler } from "../utils/logger";
+import { randomString } from "../utils/random";
+import env from "../config/env";
+import expressAsyncHandler from "express-async-handler";
+
+const shortifyy = express.Router();
+const table = env.SUPABASE_TABLE_NAME as string;
+
+shortifyy.post(
   "/",
-  asyncHandler(async (req, res) => {
+  expressAsyncHandler(async (req, res): Promise<any> => {
     let { longUrl } = req.body;
     const urlParts = longUrl.split(".");
     if (urlParts.length < 2) return res.json({ message: "invalid url" });
@@ -37,9 +41,7 @@ shorten.post(
           payload: { shortUrl: supares.data.shortUrl },
         });
 
-      const upload = await supabase
-        .from(process.env.SUPABASE_TABLE_NAME)
-        .insert([data]);
+      const upload = await supabase.from(table).insert([data]);
 
       console.log(upload, "upload res");
       if (upload.error) throw new Error(upload.error.message);
@@ -54,13 +56,13 @@ shorten.post(
   })
 );
 
-shorten.get(
+shortifyy.get(
   "/:alias",
-  asyncHandler(async (req, res) => {
+  expressAsyncHandler(async (req, res): Promise<any> => {
     const { alias } = req.params;
     try {
       const supares = await supabase
-        .from(process.env.SUPABASE_TABLE_NAME)
+        .from(table)
         .select("*")
         .eq("alias", alias)
         .single();
@@ -77,4 +79,4 @@ shorten.get(
   })
 );
 
-module.exports = shorten;
+export { shortifyy };
