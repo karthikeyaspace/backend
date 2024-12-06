@@ -1,13 +1,21 @@
 import express from "express";
+import expressAsyncHandler from "express-async-handler";
 
 import supabase from "../config/db";
 import { errorHandler } from "../utils/logger";
 import { randomString } from "../utils/random";
 import env from "../config/env";
-import expressAsyncHandler from "express-async-handler";
 
 const shortifyy = express.Router();
+
 const table = env.SUPABASE_TABLE_NAME as string;
+
+export interface UrlStortnerTypes {
+  long: string;
+  alias: string;
+  short: string;
+  createdAt: Date;
+}
 
 shortifyy.post(
   "/",
