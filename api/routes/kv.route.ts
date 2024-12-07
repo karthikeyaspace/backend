@@ -29,6 +29,8 @@ kv.post(
       return res.send({ success: false, message: "Mail not sent" });
     } catch (error) {
       errorHandler(error, "kvApp-post");
+    } finally {
+      return res.send({ success: false, message: "Mail not sent" });
     }
   })
 );

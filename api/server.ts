@@ -6,7 +6,7 @@ import { kv } from "./routes/kv.route";
 
 const app = express();
 
-const whitelist = ["http://localhost:5173", "https://itskv.me"];
+const whitelist = ["http://localhost:5173", "https://www.itskv.me", "https://itskv.me"];
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
