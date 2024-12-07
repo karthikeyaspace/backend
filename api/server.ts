@@ -2,7 +2,7 @@ import express, { Response } from "express";
 import cors, { CorsOptions } from "cors";
 import env from "./config/env";
 import { kv } from "./routes/kv.route";
-import { shortifyy } from "./routes/shortifyy.route";
+// import { shortifyy } from "./routes/shortifyy.route";
 
 const app = express();
 
@@ -22,7 +22,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/kv", kv);
-app.use("/shortifyy", shortifyy);
+// app.use("/shortifyy", shortifyy);
 
 app.get("/", (_, res: Response) => {
   res.send(

@@ -10,12 +10,7 @@ const shortifyy = express.Router();
 
 const table = env.SUPABASE_TABLE_NAME as string;
 
-export interface UrlStortnerTypes {
-  long: string;
-  alias: string;
-  short: string;
-  createdAt: Date;
-}
+
 
 shortifyy.post(
   "/",

@@ -3,10 +3,10 @@ import expressAsyncHandler from "express-async-handler";
 
 import env from "../config/env";
 import { sendMail } from "../config/mail";
+import { MailOptionTypes } from "../utils/types";
 import { errorHandler } from "../utils/logger";
 
 const kv = express.Router();
-
 const myemail = env.EMAIL_ID as string;
 
 kv.post(
@@ -14,7 +14,7 @@ kv.post(
   expressAsyncHandler(async (req, res): Promise<any> => {
     let { name, email, message } = req.body;
 
-    const mailOptionsToMe = {
+    const mailOptions: MailOptionTypes = {
       from: `"Karthikeya Veruturi" <${myemail}>`,
       to: myemail,
       subject: "New mail received",
@@ -22,8 +22,8 @@ kv.post(
     };
 
     try {
-      const toMe = await sendMail(mailOptionsToMe);
-      if (toMe.success)
+      const hmm = await sendMail(mailOptions);
+      if (hmm)
         return res.send({ success: true, message: "Mail sent successfully" });
 
       return res.send({ success: false, message: "Mail not sent" });
