@@ -6,7 +6,12 @@ import { shortifyy } from "./routes/shortifyy.route";
 
 const app = express();
 
-const whitelist = ["http://localhost:5173", "https://www.itskv.me", "https://itskv.me"];
+const whitelist = [
+  "http://localhost:5173",
+  "https://www.itskv.me",
+  "https://itskv.me",
+  "https://shortifyy.vercel.app",
+];
 
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
