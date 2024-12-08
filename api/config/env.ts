@@ -9,6 +9,7 @@ const env = {
   SUPABASE_URL: process.env.SUPABASE_URL,
   SUPABASE_KEY: process.env.SUPABASE_KEY,
   SUPABASE_TABLE_NAME: process.env.SUPABASE_TABLE_NAME,
+  SHORTIFYY_URL: process.env.SHORTIFYY_URL,
 };
 
 Object.keys(env).forEach((key) => {
