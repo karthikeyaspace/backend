@@ -17,11 +17,16 @@ shortifyy.post(
     let { long, alias } = data;
 
     if (!long) return res.json({ message: "long url not provided" });
-    if (alias && (alias.length < 2 || alias.length > 10))
+    if (alias && (alias.length < 2 || alias.length > 10)) {
       return res.send({
         success: false,
         message: "alias length should be between 3 and 10",
       });
+    }
+
+    if (!long.startsWith("http")) {
+      long = "http://" + long;
+    }
 
     if (!alias || alias === " ") alias = randomString(5);
 
@@ -41,12 +46,26 @@ shortifyy.post(
         .eq("long", formData.long)
         .single();
 
-      if (supares.data)
+      if (supares.data) {
         return res.send({
           success: true,
           message: "short url already exists",
           short: supares.data.short,
         });
+      }
+
+      const supares2 = await supabase
+        .from(table)
+        .select("*")
+        .eq("alias", alias)
+        .single();
+
+      if (supares2.data) {
+        return res.send({
+          success: false,
+          message: "alias already exists",
+        });
+      }
 
       const upload = await supabase.from(table).insert([formData]);
 
