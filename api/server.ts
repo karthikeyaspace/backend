@@ -31,11 +31,6 @@ app.use("/kv", kv);
 app.use("/shortifyy", shortifyy);
 app.use("/npx", npx)
 
-app.get("/", (_, res: Response) => {
-  res.send(
-    'Hello World - <a href="https://itskv.me" target="_blank">Visit my website</a>'
-  );
-});
 
 app.listen(env.PORT, () => {
   console.log(`Server is running on port ${env.PORT}`);
