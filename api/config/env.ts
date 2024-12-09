@@ -10,11 +10,13 @@ const env = {
   SUPABASE_KEY: process.env.SUPABASE_KEY,
   SUPABASE_TABLE_NAME: process.env.SUPABASE_TABLE_NAME,
   SHORTIFYY_URL: process.env.SHORTIFYY_URL,
+  GITHUB_API_KEY: process.env.GITHUB_API_KEY,
+  GITHUB_USERNAME: "karthikeyaspace",
 };
 
 Object.keys(env).forEach((key) => {
   if (!env[key as keyof typeof env])
-    throw new Error(`${key} is not defined in .env file`);
+    throw new Error(`${key} is not defined in .env file`); 
 });
 
 export default env;

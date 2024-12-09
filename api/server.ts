@@ -3,6 +3,7 @@ import cors, { CorsOptions } from "cors";
 import env from "./config/env";
 import { kv } from "./routes/kv.route";
 import { shortifyy } from "./routes/shortifyy.route";
+import { npx } from "./routes/npx.route";
 
 const app = express();
 
@@ -24,10 +25,11 @@ const corsOptions: CorsOptions = {
 
 app.use(cors(corsOptions));
 
-app.use(express.json());
+app.use(express.json()); 
 
 app.use("/kv", kv);
 app.use("/shortifyy", shortifyy);
+app.use("/npx", npx)
 
 app.get("/", (_, res: Response) => {
   res.send(
